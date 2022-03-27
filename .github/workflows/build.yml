@@ -1,0 +1,67 @@
+name: CI/CD
+
+on: [push]
+
+jobs:
+  
+  build_and_test:
+    name: Build/Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        dotnet-version: ['3.1.x']
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v1.7.2
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
+
+      - name: Run Test and Generate coverage report
+        run: dotnet test .\src\ --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
+          flags: unittests
+          name: codecov-umbrella
+          verbose: true
+
+  publish:
+    name: Publish
+    needs: [build_and_test]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['3.1.x']
+
+    steps:
+    - uses: actions/checkout@v2    
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.417
+
+    - name: Install dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build .\src\ --configuration Release --no-restore
+
+    - name: Publish
+      run:  dotnet publish .\src\
+
+    - name: Upload dotnet-ddd Application Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: dotnet-ddd-Application-Artifact
+        path: /home/runner/work/dotnet-ddd/src/Api.Application/bin/Debug/netcoreapp3.1/publish/
