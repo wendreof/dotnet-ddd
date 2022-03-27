@@ -11,7 +11,7 @@ namespace Api.Data.Repository
   public class BaseRepository<T> : IRepository<T> where T : BaseEntity
   {
     protected readonly MyContext _context;
-    private DbSet<T> _dataset;
+    private readonly DbSet<T> _dataset;
     public BaseRepository(MyContext context)
     {
       _context = context;
@@ -20,9 +20,25 @@ namespace Api.Data.Repository
 
     public MyContext MyContext { get; }
 
-    public Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
-      throw new NotImplementedException();
+      try
+      {
+        var result = await _dataset.SingleOrDefaultAsync(user => user.Id.Equals(id));
+        if (result == null)
+        {
+          return false;
+        }
+
+        _dataset.Remove(result);
+        await _context.SaveChangesAsync();
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+
+      return true;
     }
 
     public async Task<T> InsertAsync(T item)
