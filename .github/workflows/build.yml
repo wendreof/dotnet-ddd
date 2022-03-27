@@ -26,7 +26,7 @@ jobs:
         run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
 
       - name: Run Test and Generate coverage report
-        run: dotnet test .\src\ --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+        run: dotnet test src --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
       
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
@@ -55,10 +55,10 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet build .\src\ --configuration Release --no-restore
+      run: dotnet build src --configuration Release --no-restore
 
     - name: Publish
-      run:  dotnet publish .\src\
+      run:  dotnet publish src
 
     - name: Upload dotnet-ddd Application Artifact
       uses: actions/upload-artifact@v2
