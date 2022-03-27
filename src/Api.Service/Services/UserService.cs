@@ -41,7 +41,4 @@ namespace Api.Service.Services
       return await _repository.UpdateAsync(userEntity);
     }
   }
-
-
-
 }
