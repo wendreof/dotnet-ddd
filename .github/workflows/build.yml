@@ -20,14 +20,14 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore src
 
       - name: Build
-        run: dotnet build --no-restore /p:ContinuousIntegrationBuild=true
+        run: dotnet build src --no-restore /p:ContinuousIntegrationBuild=true
 
       - name: Run Test and Generate coverage report
         run: dotnet test src --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-      
+      s
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
