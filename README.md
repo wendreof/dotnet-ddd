@@ -14,3 +14,10 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=wendreof_dotnet-ddd&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=wendreof_dotnet-ddd)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=wendreof_dotnet-ddd&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=wendreof_dotnet-ddd)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=wendreof_dotnet-ddd&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=wendreof_dotnet-ddd)
+
+# How to run
+
+## Setup MySQL + Adminer (http://localhost:8080/)
+```bash
+docker-compose up -d
+```

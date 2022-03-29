@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Api.Domain.Entities;
 using Api.Domain.Interfaces.Services.User;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,51 @@ namespace Api.Application.Controllers
       try
       {
         return Ok(await _service.GetAll());
+      }
+      catch (ArgumentException ex)
+      {
+        return StatusCode(500, ex.Message);
+      }
+    }
+
+    [HttpGet]
+    [Route("{id}", Name = "GetWithId")]
+    public async Task<ActionResult> Get(Guid id)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      try
+      {
+        return Ok(await _service.Get(id));
+      }
+      catch (ArgumentException ex)
+      {
+        return StatusCode(500, ex.Message);
+      }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Post([FromBody] UserEntity user)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      try
+      {
+        var result = await _service.Post(user);
+        if (result != null)
+        {
+          return Created(new Uri(Url.Link("GetWithId", new { id = result.Id })), result);
+        }
+        else
+        {
+          return BadRequest();
+        }
       }
       catch (ArgumentException ex)
       {
