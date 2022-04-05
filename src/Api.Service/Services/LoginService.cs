@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Api.Domain.Entities;
+using Api.Domain.Dtos;
 using Api.Domain.Interfaces.Services.User;
 using Api.Domain.Repository;
 
@@ -14,7 +14,7 @@ namespace Api.Service.Services
       _repository = repository;
     }
 
-    public async Task<object> FindByLogin(UserEntity userEntity)
+    public async Task<object> FindByLogin(LoginDto userEntity)
     {
       if (userEntity != null && !string.IsNullOrEmpty(userEntity.Email))
       {
