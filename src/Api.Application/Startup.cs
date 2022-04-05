@@ -64,8 +64,6 @@ namespace application
         ui.RoutePrefix = String.Empty;
       });
 
-      app.UseWelcomePage();
-
       app.UseRouting();
 
       app.UseAuthorization();
