@@ -3,12 +3,12 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Domain.Security
 {
-  public class SigningConfiguration
+  public class SigningConfigurations
   {
     public SecurityKey Key { get; set; }
     public SigningCredentials SigningCredentials { get; set; }
 
-    public SigningConfiguration()
+    public SigningConfigurations()
     {
       using var provider = new RSACryptoServiceProvider(2048);
 
