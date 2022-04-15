@@ -9,7 +9,7 @@ namespace Api.Data.Implementations
 {
   public class UserImplementation : BaseRepository<UserEntity>, IUserRepository
   {
-    private DbSet<UserEntity> _dataset;
+    private readonly DbSet<UserEntity> _dataset;
 
     public UserImplementation(MyContext context) : base(context)
     {
