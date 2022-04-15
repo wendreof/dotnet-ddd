@@ -89,6 +89,30 @@ namespace application
               Url = new Uri("https://github.com/wendreof/dotnet-ddd"),
             }
           });
+
+          gen.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+          {
+            Description = "Type the JWT Bearer Token this way: Bearer {your entire JWT Token (without de brackets)}",
+            Name = "Authorization",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.ApiKey,
+            Scheme = "Bearer"
+          });
+
+          gen.AddSecurityRequirement(new OpenApiSecurityRequirement
+          {
+            {
+              new OpenApiSecurityScheme
+              {
+                Reference = new OpenApiReference
+                {
+                  Type = ReferenceType.SecurityScheme,
+                  Id = "Bearer"
+                }
+              },
+              new string[] {}
+            }
+          });
         });
     }
 
