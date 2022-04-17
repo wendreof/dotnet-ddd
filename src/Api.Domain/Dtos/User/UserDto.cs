@@ -7,7 +7,6 @@ namespace Api.Domain.Dtos.User
   {
     [DefaultValue("wendreo@dotnet.com")]
     [Required(ErrorMessage = "Name eh obrigatorio")]
-    [EmailAddress(ErrorMessage = "Name invalido")]
     [StringLength(60, ErrorMessage = "Name deve ter no maximo {1} caracteres")]
     public string Name { get; set; }
 

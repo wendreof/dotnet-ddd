@@ -4,9 +4,9 @@ using AutoMapper;
 
 namespace Api.CrossCutting.Mappings
 {
-  public class EntityToModelProfile : Profile
+  public class EntityToDtoProfile : Profile
   {
-    public EntityToModelProfile()
+    public EntityToDtoProfile()
     {
       CreateMap<UserDto, UserEntity>().ReverseMap();
       CreateMap<UserDtoCreateResult, UserEntity>().ReverseMap();
