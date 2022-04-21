@@ -1,8 +1,10 @@
-version: '3'
+version: '3.8'
 
 services:
+
   mysqlsrv:
     image: mysql:latest
+    container_name: mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: "WendreoFernandes!"
       MYSQL_DATABASE: "testedb"
@@ -11,15 +13,36 @@ services:
     volumes:
       - C:\Users\wendr\OneDrive\Documentos\Docker\Volumes\MySql:\var\lib\mysql
     networks:
-      - mysql-compose-network
+      - databases-compose-network
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: sqlserver-container
+    hostname: 'sqlserver'
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: "WendreoFernandes!"
+      MSSQL_PID: 'Express'
+    ports:
+      - '11433:1433'  
+    volumes:
+      - C:\Users\wendr\OneDrive\Documentos\Docker\Volumes\Mssql:\var\opt\mssql3  
+    expose:
+      - 1433
+    networks:
+      - databases-compose-network
 
   adminer:
-    image: adminer
+    image: adminer:latest
+    container_name: adminer-container
     ports:
       - 8080:8080
+    depends_on:
+      - sqlserver
+      - mysqlsrv
     networks:
-      - mysql-compose-network
+      - databases-compose-network
 
 networks: 
-  mysql-compose-network:
+  databases-compose-network:
     driver: bridge
