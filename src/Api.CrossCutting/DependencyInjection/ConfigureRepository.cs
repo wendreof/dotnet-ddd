@@ -1,3 +1,4 @@
+using System;
 using Api.Data.Implementations;
 using Api.Data.Repository;
 using Api.Domain.Interfaces;
@@ -19,7 +20,7 @@ namespace Api.CrossCutting.DependencyInjection
 
       serviceCollection.AddDbContext<MyContext>(options =>
       {
-        options.UseMySql("Server=localhost;Port=3306;Database=testedb;Uid=root;Password=WendreoFernandes!");
+        options.UseMySql(Environment.GetEnvironmentVariable("DB_CONNECTION"));
       });
     }
   }

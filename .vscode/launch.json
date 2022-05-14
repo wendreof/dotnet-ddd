@@ -20,7 +20,9 @@
         "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
       },
       "env": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB_CONNECTION": "Server=localhost;Port=3306;Database=testedb;Uid=root;Password=WendreoFernandes!",
+        "MIGRATION": "APLICAR"
       },
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/Views"
