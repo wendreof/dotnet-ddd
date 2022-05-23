@@ -2,6 +2,7 @@ using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace Api.Data.Context
 {
@@ -11,7 +12,7 @@ namespace Api.Data.Context
     public MyContext CreateDbContext(string[] args)
     {
       //var connectionString = _configuration.GetConnectionString("DefaultConnection");
-      var connectionString = "Server=localhost;Port=3306;Database=testedb;Uid=root;Password=WendreoFernandes!";
+      var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
       var optionsBuilder = new DbContextOptionsBuilder<MyContext>();
       optionsBuilder.UseMySql(connectionString);
       return new MyContext(optionsBuilder.Options);
