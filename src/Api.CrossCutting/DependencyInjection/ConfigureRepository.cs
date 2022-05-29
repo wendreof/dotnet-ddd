@@ -10,18 +10,18 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Api.CrossCutting.DependencyInjection
 {
-  public class ConfigureRepository
-  {
-    public IConfiguration Configuration { get; }
-    public static void ConfigureDependencyRepository(IServiceCollection serviceCollection)
+    public class ConfigureRepository
     {
-      serviceCollection.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
-      serviceCollection.AddScoped<IUserRepository, UserImplementation>();
+        public IConfiguration Configuration { get; }
+        public static void ConfigureDependencyRepository(IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+            serviceCollection.AddScoped<IUserRepository, UserImplementation>();
 
-      serviceCollection.AddDbContext<MyContext>(options =>
-      {
-        options.UseMySql(Environment.GetEnvironmentVariable("DB_CONNECTION"));
-      });
+            serviceCollection.AddDbContext<MyContext>(options =>
+            {
+                options.UseMySql(Environment.GetEnvironmentVariable("DB_CONNECTION"));
+            });
+        }
     }
-  }
 }

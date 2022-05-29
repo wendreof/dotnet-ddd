@@ -8,113 +8,113 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data.Repository
 {
-  public class BaseRepository<T> : IRepository<T> where T : BaseEntity
-  {
-    protected readonly MyContext _context;
-    private readonly DbSet<T> _dataset;
-    public BaseRepository(MyContext context)
+    public class BaseRepository<T> : IRepository<T> where T : BaseEntity
     {
-      _context = context;
-      _dataset = context.Set<T>();
-    }
-
-    public MyContext MyContext { get; }
-
-    public async Task<bool> DeleteAsync(Guid id)
-    {
-      try
-      {
-        var result = await _dataset.SingleOrDefaultAsync(user => user.Id.Equals(id));
-        if (result == null)
+        protected readonly MyContext _context;
+        private readonly DbSet<T> _dataset;
+        public BaseRepository(MyContext context)
         {
-          return false;
+            _context = context;
+            _dataset = context.Set<T>();
         }
 
-        _dataset.Remove(result);
-        await _context.SaveChangesAsync();
-      }
-      catch (Exception ex)
-      {
-        throw ex;
-      }
+        public MyContext MyContext { get; }
 
-      return true;
-    }
-
-    public async Task<T> InsertAsync(T item)
-    {
-      try
-      {
-        if (item.Id == Guid.Empty)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-          item.Id = Guid.NewGuid();
+            try
+            {
+                var result = await _dataset.SingleOrDefaultAsync(user => user.Id.Equals(id));
+                if (result == null)
+                {
+                    return false;
+                }
+
+                _dataset.Remove(result);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return true;
         }
 
-        item.CreatedAt = DateTime.UtcNow;
-
-        _dataset.Add(item);
-        await _context.SaveChangesAsync();
-      }
-      catch (Exception ex)
-      {
-        throw ex;
-      }
-
-      return item;
-    }
-
-    public async Task<bool> ExistAsync(Guid id)
-    {
-      return await _dataset.AnyAsync(user => user.Id.Equals(id));
-    }
-
-    public async Task<T> SelectAsync(Guid id)
-    {
-      try
-      {
-        return await _dataset.SingleOrDefaultAsync(user => user.Id.Equals(id));
-      }
-      catch (Exception ex)
-      {
-        throw ex;
-      }
-    }
-
-    public async Task<IEnumerable<T>> SelectAsync()
-    {
-      try
-      {
-        return await _dataset.ToListAsync();
-      }
-      catch (Exception ex)
-      {
-        throw ex;
-      }
-    }
-
-    public async Task<T> UpdateAsync(T item)
-    {
-      try
-      {
-        var result = await _dataset.SingleOrDefaultAsync(user => user.Id.Equals(item.Id));
-
-        if (result == null)
+        public async Task<T> InsertAsync(T item)
         {
-          return null;
+            try
+            {
+                if (item.Id == Guid.Empty)
+                {
+                    item.Id = Guid.NewGuid();
+                }
+
+                item.CreatedAt = DateTime.UtcNow;
+
+                _dataset.Add(item);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return item;
         }
 
-        item.UpdatedAt = DateTime.UtcNow;
-        item.CreatedAt = result.CreatedAt;
+        public async Task<bool> ExistAsync(Guid id)
+        {
+            return await _dataset.AnyAsync(user => user.Id.Equals(id));
+        }
 
-        _context.Entry(result).CurrentValues.SetValues(item);
-        await _context.SaveChangesAsync();
-      }
-      catch (Exception ex)
-      {
-        throw ex;
-      }
+        public async Task<T> SelectAsync(Guid id)
+        {
+            try
+            {
+                return await _dataset.SingleOrDefaultAsync(user => user.Id.Equals(id));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
-      return item;
+        public async Task<IEnumerable<T>> SelectAsync()
+        {
+            try
+            {
+                return await _dataset.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<T> UpdateAsync(T item)
+        {
+            try
+            {
+                var result = await _dataset.SingleOrDefaultAsync(user => user.Id.Equals(item.Id));
+
+                if (result == null)
+                {
+                    return null;
+                }
+
+                item.UpdatedAt = DateTime.UtcNow;
+                item.CreatedAt = result.CreatedAt;
+
+                _context.Entry(result).CurrentValues.SetValues(item);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return item;
+        }
     }
-  }
 }

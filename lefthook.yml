@@ -16,4 +16,4 @@ pre-commit:
   commands:
     pretty:
       glob: "*.cs"
-      run: dotnet-format {staged_files} && git add {staged_files}
+      run: dotnet-format ./src/Api.sln | git add {staged_files}

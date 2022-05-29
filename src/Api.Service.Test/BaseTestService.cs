@@ -4,33 +4,33 @@ using AutoMapper;
 
 namespace Api.Service.Test
 {
-  public abstract class BaseTestService
-  {
-    public IMapper Mapper { get; set; }
-
-    public BaseTestService()
+    public abstract class BaseTestService
     {
-      Mapper = new AutoMapperFixture().GetMapper();
-    }
+        public IMapper Mapper { get; set; }
 
-    public class AutoMapperFixture : IDisposable
-    {
-      public IMapper GetMapper()
-      {
-        var config = new MapperConfiguration(cfg =>
+        public BaseTestService()
         {
-          cfg.AddProfile(new ModelToEntityProfile());
-          cfg.AddProfile(new DtoToModelProfile());
-          cfg.AddProfile(new EntityToDtoProfile());
-        });
+            Mapper = new AutoMapperFixture().GetMapper();
+        }
 
-        return config.CreateMapper();
-      }
+        public class AutoMapperFixture : IDisposable
+        {
+            public IMapper GetMapper()
+            {
+                var config = new MapperConfiguration(cfg =>
+                   {
+                       cfg.AddProfile(new ModelToEntityProfile());
+                       cfg.AddProfile(new DtoToModelProfile());
+                       cfg.AddProfile(new EntityToDtoProfile());
+                   });
 
-      public void Dispose()
-      {
-      }
+                return config.CreateMapper();
+            }
+
+            public void Dispose()
+            {
+            }
+        }
     }
-  }
 }
 

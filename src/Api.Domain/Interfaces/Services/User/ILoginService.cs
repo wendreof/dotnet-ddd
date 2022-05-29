@@ -3,8 +3,8 @@ using Api.Domain.Dtos.Login;
 
 namespace Api.Domain.Interfaces.Services.User
 {
-  public interface ILoginService
-  {
-    Task<object> FindByLogin(LoginDto userEntity);
-  }
+    public interface ILoginService
+    {
+        Task<object> FindByLogin(LoginDto userEntity);
+    }
 }

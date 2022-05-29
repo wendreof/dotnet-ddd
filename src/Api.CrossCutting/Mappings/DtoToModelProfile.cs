@@ -4,13 +4,13 @@ using AutoMapper;
 
 namespace Api.CrossCutting.Mappings
 {
-  public class DtoToModelProfile : Profile
-  {
-    public DtoToModelProfile()
+    public class DtoToModelProfile : Profile
     {
-      CreateMap<UserModel, UserDto>().ReverseMap();
-      CreateMap<UserModel, UserDtoCreate>().ReverseMap();
-      CreateMap<UserModel, UserDtoUpdate>().ReverseMap();
+        public DtoToModelProfile()
+        {
+            CreateMap<UserModel, UserDto>().ReverseMap();
+            CreateMap<UserModel, UserDtoCreate>().ReverseMap();
+            CreateMap<UserModel, UserDtoUpdate>().ReverseMap();
+        }
     }
-  }
 }
