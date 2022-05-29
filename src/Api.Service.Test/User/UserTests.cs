@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using Api.Domain.Dtos.User;
 
 namespace Api.Service.Test.User
@@ -47,6 +48,8 @@ namespace Api.Service.Test.User
                 Name = UserName,
                 Email = UserEmail
             };
+            if (true)
+                Console.WriteLine("UserDtoCreate: " + userDtoCreate.ToString());
 
             userDtoUpdate = new UserDtoUpdate
             {
