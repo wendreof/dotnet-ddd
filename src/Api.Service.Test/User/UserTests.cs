@@ -6,23 +6,23 @@ namespace Api.Service.Test.User
 {
   public class UserTests
   {
-    public static string UserName { get; set; }
+        public static string UserName { get; set; }
     public static string UserEmail { get; set; }
-    public static string UserNameModified { get; set; }
+        public static string UserNameModified { get; set; }
     public static string UserEmailModified { get; set; }
-    public static Guid UserId { get; set; }
+public static Guid UserId { get; set; }
     public List<UserDto> listUserDto = new List<UserDto>();
-    public UserDto userDto;
+public UserDto userDto;
     public UserDtoCreate userDtoCreate;
     public UserDtoCreateResult userDtoCreateResult;
     public UserDtoUpdate userDtoUpdate;
     public UserDtoUpdateResult userDtoUpdateResult;
     public UserTests()
     {
-      UserId = Guid.NewGuid();
-      UserName = Faker.Name.FullName();
+       UserId = Guid.NewGuid();
+       UserName = Faker.Name.FullName();
       UserNameModified = Faker.Name.FullName();
-      UserEmail = Faker.Internet.Email();
+       UserEmail = Faker.Internet.Email();
       UserEmailModified = Faker.Internet.Email();
 
       for (var i = 0; i < 10; i++)
