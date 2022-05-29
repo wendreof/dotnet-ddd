@@ -26,18 +26,16 @@ namespace Api.Service.Test.User
             UserEmail = Faker.Internet.Email();
             UserEmailModified = Faker.Internet.Email();
 
-            for (var     i = 0;   i < 10; i    +  +)
+            for (var i = 0; i < 10; i++)
             {
                 listUserDto.Add(new UserDto
                 {
                       Id = Guid.NewGuid(),
-        Name = Faker.Name.FullName(),
-                        Email = Faker.Internet.Email()
+                      Name = Faker.Name.FullName(),
+                      Email = Faker.Internet.Email()
                 }
-                
-                )   ;
 
-
+                );
             }
 
             userDto = new UserDto
