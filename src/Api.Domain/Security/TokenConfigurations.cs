@@ -1,4 +1,4 @@
-namespace Api.Domain.Security
+﻿namespace Api.Domain.Security
 {
     public class TokenConfigurations
     {

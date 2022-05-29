@@ -1,14 +1,15 @@
-using System;
+﻿using System;
 using Api.CrossCutting.Mappings;
-using AutoMapper;   
+using AutoMapper;
 
 namespace Api.Service.Test
 {
     public abstract class BaseTestService
-    {public IMapper Mapper { get; set; }
+    {
+        public IMapper Mapper { get; set; }
 
-     public BaseTestService()
-{
+        public BaseTestService()
+        {
             Mapper = new AutoMapperFixture().GetMapper();
         }
 

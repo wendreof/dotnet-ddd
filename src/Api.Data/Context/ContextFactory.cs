@@ -1,8 +1,8 @@
+﻿using System;
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System;
 
 namespace Api.Data.Context
 {

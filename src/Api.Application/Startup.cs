@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Api.CrossCutting.DependencyInjection;
 using Api.CrossCutting.Mappings;
 using Api.Domain.Security;

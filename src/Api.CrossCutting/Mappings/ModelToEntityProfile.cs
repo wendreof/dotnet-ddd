@@ -1,4 +1,4 @@
-using Api.Domain.Entities;
+﻿using Api.Domain.Entities;
 using Api.Domain.Models;
 using AutoMapper;
 
