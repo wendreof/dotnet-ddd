@@ -30,9 +30,9 @@ namespace Api.Service.Test.User
             {
                 listUserDto.Add(new UserDto
                 {
-                      Id = Guid.NewGuid(),
-                      Name = Faker.Name.FullName(),
-                      Email = Faker.Internet.Email()
+                    Id = Guid.NewGuid(),
+                    Name = Faker.Name.FullName(),
+                    Email = Faker.Internet.Email()
                 }
 
                 );
