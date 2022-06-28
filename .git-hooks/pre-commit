@@ -1,0 +1,23 @@
+#!/bin/sh
+
+echo "Formattng the .cs files changed... ✨✨✨"
+
+# Valida HoosPath
+git config core.hooks
+
+# Format the code
+FILES=$(git diff --cached --name-only --diff-filter=ACM "*.cs")
+if [ -n "$FILES" ]
+then
+    dotnet-format webApi_Pix.sln --include $FILES
+    echo "$FILES" | xargs git add
+fi
+
+if [ $? -ne 0 ]; then
+  echo "Wasn't possible format your changes...."
+  exit 1
+fi
+
+echo "Formatting done 😎😎"
+
+exit 0

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "Building before push ⚒️⚒️⚒️"
+
+dotnet build src
+
+echo "Build done!"

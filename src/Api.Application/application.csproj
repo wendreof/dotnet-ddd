@@ -15,5 +15,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <Target Name="MyCustomTask" BeforeTargets="CoreBuild">
+    <Exec Command="$(PowerShellExe) dotnet tool update -g dotnet-format " />
+    <Exec Command="$(PowerShellExe) git config --local core.hooksPath .\.git-hooks\" />
+  </Target>
+
 
 </Project>
