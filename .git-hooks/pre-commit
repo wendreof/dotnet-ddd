@@ -2,7 +2,7 @@
 
 echo "Formattng the .cs files changed... ✨✨✨"
 
-# Valida HoosPath
+# Valida HooksPath
 git config core.hooks
 
 # Format the code
