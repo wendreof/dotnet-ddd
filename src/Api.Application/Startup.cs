@@ -155,12 +155,12 @@ namespace application
                 endpoints.MapControllers();
             });
 
-            if (Environment.GetEnvironmentVariable("MIGRATION").ToLower() == "aplicar")
-            {
-                using var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
-                var context = service.ServiceProvider.GetService<MyContext>();
-                context.Database.Migrate();
-            }
+            // if (Environment.GetEnvironmentVariable("MIGRATION").ToLower() == "aplicar")
+            // {
+            //     using var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            //     var context = service.ServiceProvider.GetService<MyContext>();
+            //     context.Database.Migrate();
+            // }
         }
     }
 }
