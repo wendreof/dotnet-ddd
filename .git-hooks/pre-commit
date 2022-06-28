@@ -9,7 +9,7 @@ git config core.hooks
 FILES=$(git diff --cached --name-only --diff-filter=ACM "*.cs")
 if [ -n "$FILES" ]
 then
-    dotnet-format webApi_Pix.sln --include $FILES
+    dotnet-format src --include $FILES
     echo "$FILES" | xargs git add
 fi
 

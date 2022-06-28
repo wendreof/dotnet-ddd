@@ -1,4 +1,4 @@
-using Api.Domain.Interfaces.Services.User;
+﻿using Api.Domain.Interfaces.Services.User;
 using Moq;
 using Xunit;
 
