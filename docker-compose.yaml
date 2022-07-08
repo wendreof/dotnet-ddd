@@ -1,13 +1,15 @@
-version: '3.8'
+version: '3.9'
 
 services:
 
-  mysqlsrv:
+  mysqlsrv: #server
     image: mysql:latest
     container_name: mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: "WendreoFernandes!"
       MYSQL_DATABASE: "testedb"
+      #user: root
+    restart: always
     ports:
       - "3306:3306"
     volumes:
@@ -15,14 +17,16 @@ services:
     networks:
       - databases-compose-network
 
-  sqlserver:
+  sqlserver: #server
     image: mcr.microsoft.com/mssql/server:latest
     container_name: sqlserver-container
     hostname: 'sqlserver'
     environment:
       ACCEPT_EULA: 'Y'
       SA_PASSWORD: "WendreoFernandes!"
+      #user: SA
       MSSQL_PID: 'Express'
+    restart: always
     ports:
       - '11433:1433'  
     volumes:
@@ -32,14 +36,30 @@ services:
     networks:
       - databases-compose-network
 
+  postgres: #server
+    image: postgres:latest
+    container_name: postgres-container
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=WendreoFernandes!
+    ports:
+      - '5432:5432'
+    volumes:
+      - C:\Users\wendr\OneDrive\Documentos\Docker\Volumes\postgres:/var/lib/postgresql/data
+    networks:
+      - databases-compose-network
+
   adminer:
     image: adminer:latest
     container_name: adminer-container
+    restart: always
     ports:
       - 8080:8080
     depends_on:
       - sqlserver
       - mysqlsrv
+      - postgres
     networks:
       - databases-compose-network
 
