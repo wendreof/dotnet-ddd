@@ -1,20 +1,16 @@
-﻿using System;
+﻿using Api.Domain.Models;
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
 
 namespace Api.Data.Context
 {
     public class ContextFactory : IDesignTimeDbContextFactory<MyContext>
     {
-        //private readonly IConfigurationRoot _configuration;
         public MyContext CreateDbContext(string[] args)
         {
-            //var connectionString = _configuration.GetConnectionString("DefaultConnection");
-            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
             var optionsBuilder = new DbContextOptionsBuilder<MyContext>();
-            optionsBuilder.UseMySql(connectionString);
+            optionsBuilder.UseMySql(Settings.ConnectionString);
             return new MyContext(optionsBuilder.Options);
         }
     }

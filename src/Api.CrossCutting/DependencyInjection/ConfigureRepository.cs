@@ -2,6 +2,7 @@
 using Api.Data.Implementations;
 using Api.Data.Repository;
 using Api.Domain.Interfaces;
+using Api.Domain.Models;
 using Api.Domain.Repository;
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ namespace Api.CrossCutting.DependencyInjection
 
             serviceCollection.AddDbContext<MyContext>(options =>
             {
-                options.UseMySql(Environment.GetEnvironmentVariable("DB_CONNECTION"));
+                options.UseMySql(Settings.ConnectionString);
             });
         }
     }
