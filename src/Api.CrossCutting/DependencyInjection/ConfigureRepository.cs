@@ -21,7 +21,7 @@ namespace Api.CrossCutting.DependencyInjection
 
             serviceCollection.AddDbContext<MyContext>(options =>
             {
-                options.UseMySql(Settings.ConnectionString);
+                options.UseMySql(Settings.ConnectionString, options => options.EnableRetryOnFailure());
             });
         }
     }
