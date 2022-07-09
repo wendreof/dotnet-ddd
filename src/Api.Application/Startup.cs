@@ -1,6 +1,7 @@
 ﻿using System;
 using Api.CrossCutting.DependencyInjection;
 using Api.CrossCutting.Mappings;
+using Api.Domain.Models;
 using Api.Domain.Security;
 using AutoMapper;
 using Data.Context;
@@ -15,13 +16,18 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
-namespace application
+namespace Application
 {
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Settings.ConnectionString = Configuration.GetValue<string>("ConnectionStrings:DefaultConnection");
+            Settings.Migration = Configuration.GetValue<string>("Migrations:Migration");
+            Settings.Issuer = Configuration.GetValue<string>("TokenConfigurations:Issuer");
+            Settings.Audience = Configuration.GetValue<string>("TokenConfigurations:Audience");
+            Settings.Seconds = Configuration.GetValue<string>("TokenConfigurations:Seconds");
         }
 
         public IConfiguration Configuration { get; }
@@ -39,7 +45,7 @@ namespace application
                 cfg.AddProfile(new ModelToEntityProfile());
             });
 
-            IMapper mapper = config.CreateMapper();
+            var mapper = config.CreateMapper();
             services.AddSingleton(mapper);
 
             var signingConfigurations = new SigningConfigurations();
@@ -143,7 +149,7 @@ namespace application
             app.UseSwaggerUI(ui =>
             {
                 ui.SwaggerEndpoint("/swagger/v1/swagger.json", ".NET Core with DDD");
-                ui.RoutePrefix = String.Empty;
+                ui.RoutePrefix = string.Empty;
             });
 
             app.UseRouting();
@@ -155,12 +161,12 @@ namespace application
                 endpoints.MapControllers();
             });
 
-            // if (Environment.GetEnvironmentVariable("MIGRATION").ToLower() == "aplicar")
-            // {
-            //     using var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
-            //     var context = service.ServiceProvider.GetService<MyContext>();
-            //     context.Database.Migrate();
-            // }
+            if (Settings.Migration.ToLower() == "aplicar")
+            {
+                using var service = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+                var context = service.ServiceProvider.GetService<MyContext>();
+                context.Database.Migrate();
+            }
         }
     }
 }
