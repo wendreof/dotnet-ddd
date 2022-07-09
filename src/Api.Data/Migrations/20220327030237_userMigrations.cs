@@ -27,6 +27,11 @@ namespace Data.Migrations
                 table: "User",
                 column: "Email",
                 unique: true);
+
+            migrationBuilder.InsertData(
+                       table: "User",
+                       columns: new[] { "id", "createdat", "name", "email" },
+                       values: new object[] { Guid.NewGuid(), DateTime.Now, "Administrator", "wendreadm@gmail.com" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
