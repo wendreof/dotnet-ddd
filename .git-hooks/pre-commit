@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Formattng the .cs files changed... ✨✨✨"
+echo "Formatting all *.cs files changed... ✨✨✨"
 
 # Valida HooksPath
 git config core.hooks
