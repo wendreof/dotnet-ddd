@@ -1,5 +1,4 @@
-﻿using System;
-using Api.Data.Implementations;
+﻿using Api.Data.Implementations;
 using Api.Data.Repository;
 using Api.Domain.Interfaces;
 using Api.Domain.Models;
