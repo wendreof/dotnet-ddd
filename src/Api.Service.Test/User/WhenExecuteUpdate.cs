@@ -16,19 +16,19 @@ namespace Api.Service.Test.User
             _userServiceMock.Setup(x => x.Post(userDtoCreate)).ReturnsAsync(userDtoCreateResult);
             _userService = _userServiceMock.Object;
 
-            var _result = await _userService.Post(userDtoCreate);
-            Assert.NotNull(_result);
-            Assert.Equal(userDtoCreateResult.Name, _result.Name);
-            Assert.Equal(userDtoCreateResult.Email, _result.Email);
+            var result = await _userService.Post(userDtoCreate);
+            Assert.NotNull(result);
+            Assert.Equal(userDtoCreateResult.Name, result.Name);
+            Assert.Equal(userDtoCreateResult.Email, result.Email);
 
             _userServiceMock = new Mock<IUserService>();
             _userServiceMock.Setup(x => x.Put(userDtoUpdate)).ReturnsAsync(userDtoUpdateResult);
             _userService = _userServiceMock.Object;
 
-            var _resultUpdate = await _userService.Put(userDtoUpdate);
-            Assert.NotNull(_resultUpdate);
-            Assert.Equal(UserNameModified, _resultUpdate.Name);
-            Assert.Equal(UserEmailModified, _resultUpdate.Email);
+            var resultUpdate = await _userService.Put(userDtoUpdate);
+            Assert.NotNull(resultUpdate);
+            Assert.Equal(UserNameModified, resultUpdate.Name);
+            Assert.Equal(UserEmailModified, resultUpdate.Email);
         }
     }
 }

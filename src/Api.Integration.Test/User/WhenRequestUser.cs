@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Api.Domain.Dtos.User;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ namespace Api.Integration.Test.User
         private string Name { get; set; }
         private string Email { get; set; }
 
-        [Fact(DisplayName = "Its Possibile ToCreate Crud User")]
+        [Fact(DisplayName = "Its Possibile To Create Crud User")]
         public async Task ItsPossibileToCreateCrudUser()
         {
             await AddToken();
@@ -49,8 +50,41 @@ namespace Api.Integration.Test.User
             Assert.Contains(list, x => x.Id == postRegistry.Id);
 
             //Put
+            var updateUserDto = new UserDtoUpdate
+            {
+                Id = postRegistry.Id,
+                Name = Faker.Name.FullName(),
+                Email = Faker.Internet.Email()
+            };
 
-            var stringContent = new StringContent(JsonConvert.SerializeObject(userDto));
+            var stringContent = new StringContent(JsonConvert.SerializeObject(updateUserDto),
+                Encoding.UTF8, "application/json");
+
+            response = await Client.PutAsync($"{HostApi}users", stringContent);
+            jsonResult = await response.Content.ReadAsStringAsync();
+            var updatedRegistry = JsonConvert.DeserializeObject<UserDtoUpdateResult>(jsonResult);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(updatedRegistry);
+            Assert.NotEqual(postRegistry.Name, updatedRegistry.Name);
+            Assert.NotEqual(postRegistry.Email, updatedRegistry.Email);
+            Assert.Equal(updateUserDto.Id, updatedRegistry.Id);
+
+            //Get By Id
+            response = await Client.GetAsync($"{HostApi}users/{updatedRegistry.Id}");
+            jsonResult = await response.Content.ReadAsStringAsync();
+            var getRegistry = JsonConvert.DeserializeObject<UserDto>(jsonResult);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.NotNull(getRegistry);
+            Assert.Equal(updatedRegistry.Id, getRegistry.Id);
+            Assert.Equal(updatedRegistry.Name, getRegistry.Name);
+            Assert.Equal(updatedRegistry.Email, getRegistry.Email);
+
+            //Delete
+            response = await Client.DeleteAsync($"{HostApi}users/{updatedRegistry.Id}");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            response = await Client.GetAsync($"{HostApi}users/{updatedRegistry.Id}");
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
     }
 }
