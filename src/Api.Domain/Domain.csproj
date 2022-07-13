@@ -8,4 +8,16 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Interfaces\Services\IUfService\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Interfaces\Services\IUfService\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Interfaces\Services\IUfService\**" />
+  </ItemGroup>
+
 </Project>
