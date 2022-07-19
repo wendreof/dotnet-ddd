@@ -24,53 +24,53 @@ namespace Api.Data.Test
         {
             using var context = ServiceProvider.GetService<MyContext>();
 
-            UserImplementation _repository = new UserImplementation(context);
+            var repository = new UserImplementation(context);
 
-            UserEntity _entity = new UserEntity
+            var entity = new UserEntity
             {
                 Email = Faker.Internet.Email(),
                 Name = Faker.Name.FullName(),
             };
 
             #region Create
-            var _createdRegistry = await _repository.InsertAsync(_entity);
-            Assert.NotNull(_createdRegistry);
-            Assert.Equal(_entity.Email, _createdRegistry.Email);
-            Assert.Equal(_entity.Name, _createdRegistry.Name);
-            Assert.False(_createdRegistry.Id == Guid.Empty);
+            var createdRegistry = await repository.InsertAsync(entity);
+            Assert.NotNull(createdRegistry);
+            Assert.Equal(entity.Email, createdRegistry.Email);
+            Assert.Equal(entity.Name, createdRegistry.Name);
+            Assert.False(createdRegistry.Id == Guid.Empty);
             #endregion
 
             #region Update
-            _entity.Name = Faker.Name.First();
-            var _updatedRegistry = await _repository.UpdateAsync(_entity);
-            Assert.NotNull(_updatedRegistry);
-            Assert.Equal(_entity.Email, _updatedRegistry.Email);
-            Assert.Equal(_entity.Name, _updatedRegistry.Name);
+            entity.Name = Faker.Name.First();
+            var updatedRegistry = await repository.UpdateAsync(entity);
+            Assert.NotNull(updatedRegistry);
+            Assert.Equal(entity.Email, updatedRegistry.Email);
+            Assert.Equal(entity.Name, updatedRegistry.Name);
             #endregion
 
             #region Read
-            var _registryExists = await _repository.ExistAsync(_updatedRegistry.Id);
-            Assert.True(_registryExists);
+            var registryExists = await repository.ExistAsync(updatedRegistry.Id);
+            Assert.True(registryExists);
 
-            var _selectedRegistry = await _repository.SelectAsync(_updatedRegistry.Id);
-            Assert.NotNull(_selectedRegistry);
-            Assert.Equal(_entity.Email, _selectedRegistry.Email);
-            Assert.Equal(_entity.Name, _selectedRegistry.Name);
+            var selectedRegistry = await repository.SelectAsync(updatedRegistry.Id);
+            Assert.NotNull(selectedRegistry);
+            Assert.Equal(entity.Email, selectedRegistry.Email);
+            Assert.Equal(entity.Name, selectedRegistry.Name);
 
-            var _allRegistries = await _repository.SelectAsync();
-            Assert.NotNull(_allRegistries);
-            Assert.True(_allRegistries.Count() > 0);
+            var allRegistries = await repository.SelectAsync();
+            Assert.NotNull(allRegistries);
+            Assert.True(allRegistries.Count() > 0);
             #endregion
 
             #region Delete  
-            var _deletedRegistry = await _repository.DeleteAsync(_updatedRegistry.Id);
-            Assert.True(_deletedRegistry);
+            var deletedRegistry = await repository.DeleteAsync(updatedRegistry.Id);
+            Assert.True(deletedRegistry);
             #endregion
 
-            var _defaultRegistry = await _repository.FindByLogin("wendreadm@gmail.com");
-            Assert.NotNull(_defaultRegistry);
-            Assert.Equal("wendreadm@gmail.com", _defaultRegistry.Email);
-            Assert.Equal("Administrator", _defaultRegistry.Name);
+            var defaultRegistry = await repository.FindByLogin("wendreadm@gmail.com");
+            Assert.NotNull(defaultRegistry);
+            Assert.Equal("wendreadm@gmail.com", defaultRegistry.Email);
+            Assert.Equal("Administrator", defaultRegistry.Name);
 
         }
     }
